@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Open panel on swipe - jQuery Mobile Demos</title>
+		<link rel="stylesheet" href="jquery/demos/css/themes/default/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" href="jquery/demos/_assets/css/jqm-demos.css">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="jquery/demos/js/jquery.js"></script>
+		<script src="jquery/demos/_assets/js/index.js"></script>
+		<script src="jquery/demos/js/jquery.mobile-1.4.5.min.js"></script>
+		<script src="js/script.js"></script>
+	</head>
+	<script>
+	var qID = 0;
+		$( document ).on( "pagecreate", "#main", function() {
+			
+						
+				$.ajax({
+					url: "http://192.168.89.1:80/quixn2/api.php",
+					type: "GET",
+					data: {'data':'quiz'},
+					success: function(r){
+						try{
+							json = JSON.parse(r);
+						}catch(e){
+							console.log(r);
+						}
+						var quiz,
+							caption;
+						$.each(json, function(){
+							quiz = $('<div class="quiz-item"><a href="#quiz?id='+this['id']+'" class="ui-link"><div class="caption"><h2></h2><p></p></div></a></div>').appendTo($('#quiz-list'));
+							quiz.append('<div class="overlay"></div>');
+							quiz.attr('categoria',this['categoria']['nome_css']);
+							quiz.attr('quiz-id',this['id']);
+							quiz.find('h2').text(this['titulo']);
+							quiz.find('p').text(this['descricao']);
+							quiz.find('a').click(function(){
+								qID = $(this).parents('.quiz-item').attr('quiz-id');
+							});
+						});
+					},
+					error: function(){
+						console.log('ajax error');
+					}
+				});
+			
+			$( document ).on( "swiperight", "#main", function( e ) {
+				// We check if there is no open panel on the page because otherwise
+				// a swipe to close the left panel would also open the right panel (and v.v.).
+				// We do this by checking the data that the framework stores on the page element (panel: open).
+				if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+					if ( e.type === "swipeleft" ) {
+						$( "#right-panel" ).panel( "open" );
+					} else if ( e.type === "swiperight" ) {
+						$( "#left-panel" ).panel( "open" );
+					}
+				}
+			});
+		});
+    </script>
+	<body>
+		<div data-role="page" id="main">
+
+			<div data-role="header" data-theme="b">
+				<h1>Quixes</h1>
+				<a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false" class="ui-nodisc-icon"></a>
+			</div>
+			
+			<div data-role="panel" id="left-panel" data-theme="b">
+				<a href="#" data-rel="close" class="ui-btn ui-corner-all ui-shadow ui-mini ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-right"></a>
+				<ul data-role="listview">
+					<li>
+						<a href="#">Left reveal panel.</a>	
+					</li>
+					<li>
+						<a href="#">Left reveal panel.</a>	
+					</li>
+					<li>
+						<a href="#">Left reveal panel.</a>	
+					</li>
+				</ul>
+			</div>
+
+			<div role="main" class="ui-content">
+	
+				<div id="quiz-list">
+				<!--
+					<div class="quiz-item" categoria="historia" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="geografia" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="matematica" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="ciencia" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="gerais" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="filmes_series" quiz-id="1">
+						<a href="#quiz">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>
+					<div class="quiz-item" categoria="outros" quiz-id="1">
+						<a href="#quiz?id=1">
+							<div class="caption">
+								<h2>Quem matou o Bozo?</h2>
+								<p>Bozo to com saudade de você</p>
+							</div>
+						</a>
+						<div class="overlay"></div>
+					</div>-->
+				</div>
+			</div>
+	
+		</div>
+	<script>
+	var q,
+		caption,
+		tentativa;
+		$( document ).on( "pagecreate", "#quiz", function() {
+						
+		$.ajax({
+			url: "http://192.168.89.1:80/quixn2/api.php",
+			type: "GET",
+			data: {'data':'quiz', 'id':qID},
+			success: function(r){
+				try{
+					q = JSON.parse(r);
+				}catch(e){
+					console.log(r);
+				}
+				var pCount = 0,
+					rCount = 0,
+					p,
+					r;
+				
+				var main= $('#quiz [role="main"]');
+				console.log(q);
+				main.append(
+					'<h4 class="quiz-title">'+q.titulo+'</h4>'
+				);
+				
+				$.each(q.perguntas, function(){
+				
+					pt = this;
+					
+					pergunta = $('<div class="quiz-question"></div>').appendTo(main);
+					pergunta.attr("question-id",pt.id);
+					pergunta.append('<p class="question-text">'+pt.enunciado+'</p>');
+					
+					respostas = $('<div class="question-answers"></div>').appendTo(pergunta);
+					
+					$.each(pt.respostas, function(){
+					
+						rt = this;
+						
+						resposta = $('<button class="ui-btn answer"></button>').appendTo(respostas);
+						resposta.attr('answer-id',rt.id);
+						resposta.text(rt.resposta);
+						
+					});
+					
+				});
+				
+				tentativa = new Tentativa(q);
+				
+				main.find('.quiz-question:first-of-type').activeQuestion(tentativa);
+			},
+			error: function(){
+				console.log('ajax error');
+			}
+		});
+				
+			
+			
+			$( document ).on( "swiperight", "#main", function( e ) {
+				// We check if there is no open panel on the page because otherwise
+				// a swipe to close the left panel would also open the right panel (and v.v.).
+				// We do this by checking the data that the framework stores on the page element (panel: open).
+				if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+					if ( e.type === "swipeleft" ) {
+						$( "#right-panel" ).panel( "open" );
+					} else if ( e.type === "swiperight" ) {
+						$( "#left-panel" ).panel( "open" );
+					}
+				}
+			});
+			
+		});
+    </script>
+    
+		<div data-role="page" id="quiz" quiz-id="1">
+			
+			<div role="main" class="ui-content">
+			
+			</div>
+		</div>
+	</body>
+</html>

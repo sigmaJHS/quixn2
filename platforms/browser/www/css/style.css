@@ -1,0 +1,124 @@
+a{
+	text-decoration: none;
+}
+
+html .ui-bar-b[data-role="header"]{
+	background: #3b91da;
+}
+
+html .ui-bar-b[data-role="header"] .ui-icon-bars{
+    background: transparent;
+    border-color: white;
+}
+
+#footer{
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	background: #c9c9c9;
+	z-index: 10;
+}
+
+#footer a{
+	padding: 15px;
+	display: inline-block;
+	color: #fff;
+	text-shadow: 0px 0px 10px #000;
+	text-decoration: none;
+	font-family: cursive;
+}
+
+#footer a:hover{
+	text-shadow: 0px 0px 5px #000;
+}
+
+#quiz-list{
+	font-size: 0;
+}
+
+#quiz-list > *{
+	font-size: initial;
+}
+
+.quiz-item{
+	display: inline-block;
+	width: 49%;
+	margin: 0.5%;
+	position: relative;
+	background-position: center;
+	background-size: cover;
+}
+
+.quiz-item[categoria="historia"]{
+	background-image: url("../img/cavalos.jpg");
+}
+
+.quiz-item[categoria="geografia"]{
+	background-image: url("../img/globo.jpg");
+}
+
+.quiz-item[categoria="matematica"]{
+	background-image: url("../img/nazare.jpg");
+}
+
+.quiz-item[categoria="ciencia"]{
+	background-image: url("../img/milky_way.jpg");
+}
+
+.quiz-item[categoria="gerais"]{
+	background-image: url("../img/objetos.jpg");
+}
+
+.quiz-item[categoria="filmes_series"]{
+	background-image: url("../img/vingadores.jpg");
+}
+
+.quiz-item[categoria="outros"]{
+	background-image: url("../img/interrogacoes.jpg");
+}
+
+.quiz-item .overlay{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #000;
+	opacity: .3;
+	z-index: 1;
+	transition: 0.2s;
+}
+
+.quiz-item a{
+	position: relative;
+	z-index: 2;
+}
+
+.quiz-item a:hover + .overlay{
+	opacity: .7;
+}
+
+.quiz-item .caption{
+	padding: 20px 10px;
+	font-family: cursive;
+	position: relative;
+	z-index: 3;
+}
+
+.quiz-item .caption h2{
+	font-size: 16px;
+	line-height: 21px;
+	color: #fff;
+	margin: 0;
+}
+
+.quiz-item .caption p{
+	margin: 0;
+	font-size: 12px;
+	color: #fff;
+}
+
+.quiz-question:not(.active){
+	display: none;
+}
